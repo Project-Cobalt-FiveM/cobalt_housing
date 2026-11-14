@@ -43,15 +43,14 @@ end
 
 ---@param source integer
 ---@param location StarterLocation
----@param citizenid string
 ---@return InteriorView?, string?
-local function enter(source, location, citizenid)
+local function enter(source, location)
     return Occupancy.enter(source, {
         kind = 'starter',
         shell = starter.shell,
         door = location.door,
         stashId = 'starter',
-        stashOwner = citizenid,
+        personalStash = true,
     }, config.buckets.starter + source)
 end
 
@@ -91,7 +90,7 @@ local function choose(source, id)
     picks[source] = nil
     player.Functions.SetMetaData('starterApartment', location.id)
 
-    return enter(source, location, player.PlayerData.citizenid)
+    return enter(source, location)
 end
 
 ---@param source integer
@@ -105,7 +104,7 @@ local function enterOwn(source)
         return nil, locale('starter.stand_at_door')
     end
 
-    return enter(source, location, player.PlayerData.citizenid)
+    return enter(source, location)
 end
 
 lib.callback.register('cobalt_housing:openStarterPicker', openPicker)

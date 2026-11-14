@@ -11,7 +11,7 @@ local Players <const> = require 'server.players'
 ---@field door vector4
 ---@field propertyId? integer
 ---@field stashId? string
----@field stashOwner? string citizenid whose personal copy of the stash opens; nil for a property's shared stash
+---@field personalStash? true each character opens their own copy of the stash; nil for a property's shared stash
 
 ---@class InteriorView
 ---@field kind OccupancyKind
@@ -166,14 +166,18 @@ local function openStash(source)
         if not citizenid or not Properties.hasAccess(citizenid, occupancy.propertyId) then return false end
     end
 
-    exports.cobalt_inventory:CreateStash(occupancy.stashId, {
+    local personal <const> = occupancy.personalStash
+
+    exports.cobalt_inventory:RegisterStash(occupancy.stashId, {
+        label = locale('occupancy.stash_label'),
         slots = config.stash.slots,
         maxWeight = config.stash.maxWeight,
-        label = locale('occupancy.stash_label'),
-        personal = occupancy.stashOwner ~= nil,
+        owner = personal,
+        coords = stash,
+        instance = not personal and GetPlayerRoutingBucket(source) or nil,
     })
 
-    return exports.cobalt_inventory:OpenStash(source, occupancy.stashId, occupancy.stashOwner) == true
+    return exports.cobalt_inventory:OpenStash(source, occupancy.stashId) == true
 end
 
 lib.callback.register('cobalt_housing:enter', enterProperty)
