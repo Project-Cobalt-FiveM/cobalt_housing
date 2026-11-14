@@ -167,7 +167,8 @@ local function openStash(source)
     end
 
     exports.cobalt_inventory:CreateStash(occupancy.stashId, {
-        invType = config.stashType,
+        slots = config.stash.slots,
+        maxWeight = config.stash.maxWeight,
         label = locale('occupancy.stash_label'),
         personal = occupancy.stashOwner ~= nil,
     })

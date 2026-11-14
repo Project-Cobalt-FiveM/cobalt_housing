@@ -1,7 +1,10 @@
 return {
     -- Realtor job and storage
     job = 'realtor', -- job that creates, prices and sells properties; must exist in cobalt_core data/jobs.lua
-    stashType = 'big_storage', -- cobalt_inventory inventory type used for each property's stash
+    stash = { -- each property's stash
+        slots = 150, -- cells, laid out 5 to a row
+        maxWeight = 400000, -- most it holds, in grams
+    },
 
     -- Ranges, in meters
     doorRange = 2.5, -- how close to a front door the enter prompt shows
