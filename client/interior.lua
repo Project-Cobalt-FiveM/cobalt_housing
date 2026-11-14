@@ -282,7 +282,6 @@ local function leaveForHospital()
 end
 
 RegisterNetEvent('cobalt_ambulancejob:client:respawnAt', leaveForHospital)
-RegisterNetEvent('cobalt_ambulancejob:client:recover', leaveForHospital)
 
 AddEventHandler('onResourceStop', function(resource)
     if resource ~= cache.resource or not current then return end
