@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS `properties` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(64) NOT NULL,
+  `price` INT UNSIGNED NOT NULL,
+  `owner` VARCHAR(50) DEFAULT NULL,
+  `shell` VARCHAR(64) NOT NULL,
+  `door` JSON NOT NULL,
+  `zone` JSON DEFAULT NULL,
+  `garage` JSON DEFAULT NULL,
+  `stash` JSON DEFAULT NULL,
+  `wardrobe` JSON DEFAULT NULL,
+  `created_by` VARCHAR(50) DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `purchased_at` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`),
+  CONSTRAINT `properties_owner_fk` FOREIGN KEY (`owner`) REFERENCES `players` (`citizenid`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
